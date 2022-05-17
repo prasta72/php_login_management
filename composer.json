@@ -1,0 +1,28 @@
+{
+    "name": "prastaakustik/belajar-php-mvc",
+    "description": "belajar php mvc",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Prasta72",
+            "email": "Prasta72@gmail.com"
+        }
+    ],
+    "require": {
+        
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "9.5.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Prastadev\\PHP\\MVC\\" : "app"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Prastadev\\PHP\\MVC\\" : "test"
+        }
+    }
+
+}
