@@ -4,23 +4,17 @@ use Prastadev\PHP\MVC\App\Render;
 
 class HomeController
 {
-    public function index(){
-        $model = [
-            "title" =>"belajar php",
-            "content" => "belajar php MVC "
-        ];
-
-        Render::render("home/index",$model);
+    public function index()
+    {
+        Render::render('home/index',[
+            "title" => "PHP Login Management"
+        ] );
     }
-    public function hello(){
-        echo "homeController.hello()";
-    }
-    public function world(){
-        echo "homeController.world()";
-    }
-
-    public function getPreg(string $name,string $hoby,string $keren){
-        echo "$name:$hoby:$keren";
+    public function register()
+    {
+        Render::render('home/register',[
+            "title" => "Register"
+        ] );
     }
 }
 

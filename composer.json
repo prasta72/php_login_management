@@ -1,6 +1,6 @@
 {
-    "name": "prastaakustik/belajar-php-mvc",
-    "description": "belajar php mvc",
+    "name": "prastaakustik/belajar-php-login-management",
+    "description": "belajar php login management",
     "type": "project",
     "authors": [
         {
@@ -26,3 +26,5 @@
     }
 
 }
+
+
