@@ -9,6 +9,11 @@ class Render
         require __DIR__ ."/../view/$data" .".php";
         require __DIR__ ."/../view/footer" .".php";
     }
+
+    public static function redirect(string $url){
+        header("Location: $url");
+        exit();
+    }
 }
 
 ?>
