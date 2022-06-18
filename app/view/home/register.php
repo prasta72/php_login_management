@@ -1,9 +1,5 @@
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-    <div class="row">
-        <div class="alert alert-danger" role="alert">
-            A simple primary alert—check it out!
-        </div>
-    </div>
+  
     <div class="row align-items-center g-lg-5 py-5">
         <div class="col-lg-7 text-center text-lg-start">
             <h1 class="display-4 fw-bold lh-1 mb-3">Register</h1>

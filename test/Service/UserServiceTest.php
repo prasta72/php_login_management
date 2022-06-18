@@ -7,7 +7,11 @@ use Prastadev\PHP\MVC\Domain\User;
 use Prastadev\PHP\MVC\Exception\ValidationException;
 use Prastadev\PHP\MVC\Model\UserLoginRequest;
 use Prastadev\PHP\MVC\Model\UserRegisterRequest;
+use Prastadev\PHP\MVC\Model\UserUpdatePasswordRequest;
+use Prastadev\PHP\MVC\Model\UserUpdateProfileRequest;
+use Prastadev\PHP\MVC\Repository\SessionRepository;
 use Prastadev\PHP\MVC\Repository\UserRepository;
+use SessionHandler;
 
 class UserServiceTest extends TestCase
 {
@@ -15,13 +19,16 @@ class UserServiceTest extends TestCase
 
     private UserRepository $userRepo;
 
+    private SessionRepository $sesionRepo;
     public function setUp():void{
 
         $con = Database::getConnection();
         $this->userRepo = new UserRepository($con);
         $this->userService = new UserService($this->userRepo);
+        $this->sesionRepo = new SessionRepository(Database::getConnection());
 
         $this->userRepo = new UserRepository(Database::getConnection());
+        $this->sesionRepo->deleteAll();
         $this->userRepo->delete();
 
     }
@@ -133,8 +140,76 @@ class UserServiceTest extends TestCase
         self::assertEquals($request->id,$respon->user->id);
         self::assertTrue(password_verify($request->password,$respon->user->password));
     }
-  
 
+    public function testUpdateSuccess()
+    {
+        $user = new User();
+        $user->id = "eko";
+        $user->name = "Eko";
+        $user->password = password_hash("eko", PASSWORD_BCRYPT);
+        $user->email = "prastakeren@@@";
+        $user->no_hp = "087678765";
+        $this->userRepo->save($user);
+
+        $request = new UserUpdateProfileRequest();
+        $request->id = "eko";
+        $request->name = "Budi";
+        $request->password = $user->password;
+        $request->email = "dwiutama@@";
+        $request->no_hp = "098987";
+
+        $this->userService->update($request);
+
+        $result = $this->userRepo->findById($user->id);
+
+        self::assertEquals($request->name, $result->name);
+    }
+
+    public function testUpdateValidationError()
+    {
+        $this->expectException(ValidationException::class);
+
+        $request = new UserUpdateProfileRequest();
+        $request->id = "";
+        $request->name = "";
+
+        $this->userService->update($request);
+    }
+
+    public function testUpdateNotFound()
+    {
+        $this->expectException(ValidationException::class);
+
+        $request = new UserUpdateProfileRequest();
+        $request->id = "eko";
+        $request->name = "Budi";
+
+        $this->userService->update($request);
+    }
+
+    public function testUserUpdatePassword(){
+        $user = new User();
+        $user->id = "eko";
+        $user->name = "Eko";
+        $user->password = password_hash("eko", PASSWORD_BCRYPT);
+        $user->email = "prastakeren@@@";
+        $user->no_hp = "087678765";
+        $this->userRepo->save($user);
+
+        $request = new UserUpdatePasswordRequest();
+        $request->id = "eko";
+        $request->name = "Budi";
+        $request->oldpassword = $user->password;
+        $request->password = $user->password;
+        $request->email = "dwiutama@@";
+        $request->no_hp = "098987";
+
+        $this->userService->updatePassword($request);
+
+        $result = $this->userRepo->findById($user->id);
+
+        self::assertEquals($request->password, $result->password);
+    }
 
 }
 

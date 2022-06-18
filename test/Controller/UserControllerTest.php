@@ -153,6 +153,12 @@ use Prastadev\PHP\MVC\Service\SessionService;
          $this->expectOutputRegex("[PRASTA_KEREN: ]");
      }
 
+    //  public function testUpdateProfile(){
+
+    //     $data = new SessionService($ses);
+
+    //  }
+
  }
 
 

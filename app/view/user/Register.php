@@ -2,7 +2,7 @@
     <?php if (isset($model['error'])){?>
     <div class="row">
         <div class="alert alert-danger" role="alert">
-            <?php if(isset($model['users']) ){echo $model['users'];} ?>
+            <?= $model["error"]?>
         </div>
     </div>
     <?php } ?>

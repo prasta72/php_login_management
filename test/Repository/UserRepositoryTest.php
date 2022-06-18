@@ -31,6 +31,23 @@ class UserRepositoryTest extends TestCase
         self::assertEquals($user->password, $result->password);
     }
 
+    public function testUpdate(){
+        $user = new User();
+        $user->id = "prasta";
+        $user->name = "prastakeren";
+        $user->password = "prasta12345";
+        $user->email = "prasta72@gmail.com";
+        $user->no_hp = "o36321600";
+
+        $this->userRepo->save($user);
+
+        $user->name = "temera";
+        $this->userRepo->update($user);
+
+        $result = $this->userRepo->findById($user->id);
+
+        self::assertEquals($result->name,$user->name);
+    }
 
 
 }

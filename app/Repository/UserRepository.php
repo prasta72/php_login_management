@@ -21,7 +21,7 @@ class UserRepository
     }
 
     public function findById(string $id): ?User{
-        $statement = $this->connection->prepare("SELECT id, name, password FROM users WHERE id = ?");
+        $statement = $this->connection->prepare("SELECT id, name, password, email, no_hp FROM users WHERE id = ?");
         $statement->execute([$id]);
 
         try{
@@ -31,6 +31,8 @@ class UserRepository
                 $user->id = $row['id'];
                 $user->name = $row['name'];
                 $user->password = $row['password'];
+                $user->email = $row['email'];
+                $user->no_hp = $row['no_hp'];
                 return $user;
             }else
             {
@@ -48,6 +50,22 @@ class UserRepository
     public function delete(){
         $this->connection->exec("DELETE  FROM users");
     }
+
+    public function update(User $user):User
+    {
+        $statement = $this->connection->prepare("UPDATE users SET name = ?, password = ?, email = ?, no_hp = ? WHERE id = ?");
+        $statement->execute([
+            $user->name,
+            $user->password,
+            $user->email,
+            $user->no_hp,
+            $user->id
+        ]);
+
+        return $user;
+    
+    }
+
 }
 
 

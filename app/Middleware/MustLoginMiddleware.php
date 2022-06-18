@@ -1,5 +1,5 @@
 <?php 
-namespace Prastadev\PHP\MVC\Midellware;
+namespace Prastadev\PHP\MVC\Middleware;
 
 use Prastadev\PHP\MVC\App\Render;
 use Prastadev\PHP\MVC\Config\Database;
@@ -7,7 +7,7 @@ use Prastadev\PHP\MVC\Repository\SessionRepository;
 use Prastadev\PHP\MVC\Repository\UserRepository;
 use Prastadev\PHP\MVC\Service\SessionService;
 
-class MustNotloginMiddleware implements Midellware
+class MustLoginMiddleware implements Middleware
 {
     private SessionService $sesionService;
 
@@ -20,8 +20,14 @@ class MustNotloginMiddleware implements Midellware
     public function before(): void
     {
         $user = $this->sesionService->current();
-        if($user != null){
-            Render::redirect('/');
+        if($user == null){
+            Render::redirect('/users/login');
         }
     }
 }
+
+
+
+
+
+?>
